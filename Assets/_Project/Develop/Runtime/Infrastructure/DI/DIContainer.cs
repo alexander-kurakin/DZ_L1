@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Assets._Project.Develop.Runtime.Infrastructure.DI
+namespace _Project.Develop.Runtime.Infrastructure.DI
 {
     public class DIContainer
     {

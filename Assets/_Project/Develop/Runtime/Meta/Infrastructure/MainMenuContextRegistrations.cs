@@ -1,7 +1,7 @@
-﻿using Assets._Project.Develop.Runtime.Infrastructure.DI;
+﻿using _Project.Develop.Runtime.Infrastructure.DI;
 using UnityEngine;
 
-namespace Assets._Project.Develop.Runtime.Meta.Infrastructure
+namespace _Project.Develop.Runtime.Meta.Infrastructure
 {
     public class MainMenuContextRegistrations
     {

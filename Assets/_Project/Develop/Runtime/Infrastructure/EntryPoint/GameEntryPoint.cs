@@ -1,12 +1,12 @@
-﻿using Assets._Project.Develop.Runtime.Infrastructure.DI;
-using Assets._Project.Develop.Runtime.Utilities.ConfigsManagment;
-using Assets._Project.Develop.Runtime.Utilities.CoroutinesManagment;
-using Assets._Project.Develop.Runtime.Utilities.LoadingScreen;
-using Assets._Project.Develop.Runtime.Utilities.SceneManagment;
-using System.Collections;
+﻿using System.Collections;
+using _Project.Develop.Runtime.Infrastructure.DI;
+using _Project.Develop.Runtime.Utilities.ConfigsManagement;
+using _Project.Develop.Runtime.Utilities.CoroutinesManagement;
+using _Project.Develop.Runtime.Utilities.LoadingScreen;
+using _Project.Develop.Runtime.Utilities.SceneManagement;
 using UnityEngine;
 
-namespace Assets._Project.Develop.Runtime.Infrastructure.EntryPoint
+namespace _Project.Develop.Runtime.Infrastructure.EntryPoint
 {
     public class GameEntryPoint : MonoBehaviour
     {
@@ -21,7 +21,7 @@ namespace Assets._Project.Develop.Runtime.Infrastructure.EntryPoint
             DIContainer projectContainer = new DIContainer();
 
             ProjectContextRegistrations.Process(projectContainer);
-
+            
             projectContainer.Resolve<ICoroutinesPerformer>().StartPerform(Initialize(projectContainer));
         }
 

@@ -1,10 +1,11 @@
-using Assets._Project.Develop.Runtime.Utilities.AssetsManagment;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using _Project.Develop.Runtime.Configs.Gameplay;
+using _Project.Develop.Runtime.Utilities.AssetsManagement;
 using UnityEngine;
 
-namespace Assets._Project.Develop.Runtime.Utilities.ConfigsManagment
+namespace _Project.Develop.Runtime.Utilities.ConfigsManagement
 {
     public class ResourcesConfigsLoader : IConfigsLoader
     {
@@ -12,6 +13,7 @@ namespace Assets._Project.Develop.Runtime.Utilities.ConfigsManagment
 
         private readonly Dictionary<Type, string> _configsResourcesPaths = new()
         {
+            {typeof(LevelConfigs), "Configs/Gameplay/LevelConfigs"},
         };
 
         public ResourcesConfigsLoader(ResourcesAssetsLoader resources)
