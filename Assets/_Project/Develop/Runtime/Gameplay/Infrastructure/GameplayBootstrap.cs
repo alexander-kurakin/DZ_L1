@@ -35,42 +35,19 @@ namespace _Project.Develop.Runtime.Gameplay.Infrastructure
             Debug.Log("Инициализация геймплейной сцены");
             
             _gameplayCycleService.Prepare();
-            _gameplayCycleService.OnWin += OnGameWon;
-            _gameplayCycleService.OnLose += OnGameLost;
 
             yield break;
-        }
-
-        private void OnGameLost()
-        {
-            SceneSwitcherService sceneSwitcherService = _container.Resolve<SceneSwitcherService>();
-            ICoroutinesPerformer coroutinesPerformer = _container.Resolve<ICoroutinesPerformer>();
-            coroutinesPerformer.StartPerform(sceneSwitcherService.ProcessSwitchTo(Scenes.Gameplay, _inputArgs));            
-        }
-
-        private void OnGameWon()
-        {
-            SceneSwitcherService sceneSwitcherService = _container.Resolve<SceneSwitcherService>();
-            ICoroutinesPerformer coroutinesPerformer = _container.Resolve<ICoroutinesPerformer>();
-            coroutinesPerformer.StartPerform(sceneSwitcherService.ProcessSwitchTo(Scenes.MainMenu));            
         }
 
         public override void Run()
         {
             Debug.Log("Старт геймплейной сцены");
             _gameplayCycleService.Launch();
-            
         }
 
         private void Update()
         {
             _gameplayCycleService?.Update(Time.deltaTime);
-        }
-
-        private void OnDestroy()
-        {
-            _gameplayCycleService.OnWin -= OnGameWon;
-            _gameplayCycleService.OnLose -= OnGameLost;
         }
     }
 }

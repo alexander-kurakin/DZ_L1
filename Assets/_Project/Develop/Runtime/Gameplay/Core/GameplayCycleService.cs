@@ -1,28 +1,38 @@
 using System;
 using _Project.Develop.Runtime.Configs.Gameplay;
 using _Project.Develop.Runtime.Gameplay.Utilities;
+using _Project.Develop.Runtime.Utilities.CoroutinesManagement;
+using _Project.Develop.Runtime.Utilities.SceneManagement;
 using UnityEngine;
 
 namespace _Project.Develop.Runtime.Gameplay.Logic
 {
     public class GameplayCycleService
     {
-        public event Action OnWin;
-        public event Action OnLose;
-        
         private SymbolGeneratorService _symbolGeneratorService;
         private LevelConfig _currentLevelConfig;
+        private ICoroutinesPerformer _coroutinesPerformer;
+        private SceneSwitcherService _sceneSwitcherService;
         private string _targetSequence;
         private bool _shouldCheckInput;
         private string _currentUserInput;
         private int _currentIndex = 0;
         private bool _winConditionReached;
         private bool _loseConditionReached;
+        private IInputSceneArgs _inputArgs;
 
-        public GameplayCycleService(SymbolGeneratorService symbolGeneratorService, LevelConfig currentLevelConfig)
+        public GameplayCycleService(
+            SymbolGeneratorService symbolGeneratorService, 
+            LevelConfig currentLevelConfig,  
+            SceneSwitcherService sceneSwitcherService, 
+            ICoroutinesPerformer coroutinesPerformer,
+            IInputSceneArgs inputArgs)
         {
             _symbolGeneratorService = symbolGeneratorService;
             _currentLevelConfig = currentLevelConfig;
+            _sceneSwitcherService = sceneSwitcherService;
+            _coroutinesPerformer = coroutinesPerformer;
+            _inputArgs = inputArgs;
         }
 
         public void Prepare()
@@ -62,9 +72,9 @@ namespace _Project.Develop.Runtime.Gameplay.Logic
                     if (Input.GetKeyDown(KeyCode.Space))
                     {
                         if (_winConditionReached)
-                            OnWin?.Invoke();
+                            OnGameWon();
                         else
-                            OnLose?.Invoke();
+                            OnGameLost();
                     }
             }
         }
@@ -101,5 +111,16 @@ namespace _Project.Develop.Runtime.Gameplay.Logic
                 }
             }
         }
+
+        private void OnGameLost()
+        {
+            _coroutinesPerformer.StartPerform(_sceneSwitcherService.ProcessSwitchTo(Scenes.Gameplay, _inputArgs));            
+        }
+
+        private void OnGameWon()
+        {
+            _coroutinesPerformer.StartPerform(_sceneSwitcherService.ProcessSwitchTo(Scenes.MainMenu));            
+        }        
+        
     }
 }
